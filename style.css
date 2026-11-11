@@ -1,0 +1,639 @@
+/* Blue SMP – wiki des joueurs
+   Une seule couleur d'accent (--accent). Le mode sombre suit le réglage du système. */
+
+:root {
+  --fond: #fbfaf7;
+  --fond-nav: #f6f4ef;
+  --texte: #1c1e21;
+  --discret: #5a6067;
+  --accent: #1f5fae;
+  --accent-fort: #174a88;
+  --bord: #d9d5cc;
+  --bord-leger: #e7e3db;
+  --code-fond: #efece5;
+  --th-fond: #f1eee8;
+  --police: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  --police-code: ui-monospace, "SF Mono", Menlo, Consolas, "Cascadia Mono", "Liberation Mono", "DejaVu Sans Mono", monospace;
+  --large-nav: 17rem;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #17191c;
+    --fond-nav: #1b1d21;
+    --texte: #e4e2dd;
+    --discret: #a3a9b1;
+    --accent: #7db0ef;
+    --accent-fort: #a6c8f4;
+    --bord: #383c43;
+    --bord-leger: #2b2e33;
+    --code-fond: #25282d;
+    --th-fond: #212429;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ---------- Lien d'évitement ---------- */
+
+.evitement {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--fond);
+  border: 1px solid var(--texte);
+  color: var(--texte);
+  z-index: 10;
+}
+
+.evitement:focus {
+  top: 0.5rem;
+}
+
+/* ---------- En-tête ---------- */
+
+.entete {
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--bord);
+}
+
+.entete-dedans {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 0.9rem;
+}
+
+.entete h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.sous-titre {
+  font-weight: 400;
+  color: var(--discret);
+  font-size: 1.05rem;
+  margin-left: 0.35rem;
+}
+
+.infos {
+  margin: 0.35rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--discret);
+}
+
+.infos span + span::before {
+  content: "·";
+  margin: 0 0.5rem;
+  color: var(--discret);
+}
+
+.infos code {
+  color: var(--texte);
+}
+
+/* ---------- Mise en page ---------- */
+
+.page {
+  max-width: 76rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--large-nav) minmax(0, 1fr);
+  align-items: start;
+}
+
+.contenu {
+  min-width: 0;
+  max-width: calc(72ch + 5rem);
+  padding: 0.5rem 2.5rem 4rem;
+}
+
+/* Lignes de 70 à 75 signes ; les tableaux gardent toute la largeur. */
+.contenu p,
+.contenu li {
+  max-width: 62ch;
+}
+
+/* ---------- Navigation ---------- */
+
+.nav {
+  border-right: 1px solid var(--bord);
+  background: var(--fond-nav);
+  align-self: stretch;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.nav-collant {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 0 2rem;
+}
+
+.recherche {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--fond-nav);
+  padding: 1rem 1rem 0.6rem;
+  border-bottom: 1px solid var(--bord-leger);
+}
+
+.recherche label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.recherche input {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--texte);
+  background: var(--fond);
+  border: 1px solid var(--discret);
+  border-radius: 2px;
+  padding: 0.35rem 0.5rem;
+}
+
+.recherche input::placeholder {
+  color: var(--discret);
+  opacity: 1;
+}
+
+.recherche input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.recherche-statut {
+  margin: 0.35rem 0 0;
+  min-height: 1.2em;
+  font-size: 0.8125rem;
+  color: var(--discret);
+}
+
+.recherche-statut:empty {
+  margin: 0;
+  min-height: 0;
+}
+
+.recherche-titres {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0.35rem 0 0;
+  border-top: 1px solid var(--bord-leger);
+  font-size: 0.875rem;
+}
+
+.recherche-titres li {
+  margin: 0.1rem 0;
+}
+
+.sommaire > summary {
+  display: none;
+}
+
+.toc,
+.toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc {
+  padding: 0.75rem 0 0;
+}
+
+.toc-partie {
+  margin: 0 0 0.6rem;
+}
+
+.toc a {
+  display: block;
+  color: var(--texte);
+  text-decoration: none;
+  padding: 0.15rem 1rem 0.15rem calc(1rem - 3px);
+  border-left: 3px solid transparent;
+}
+
+.toc-partie > a {
+  font-weight: 600;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+
+.toc ol a {
+  padding-left: calc(1.75rem - 3px);
+  color: var(--discret);
+}
+
+.toc a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.toc a[aria-current="true"] {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+/* ---------- Texte ---------- */
+
+.intro {
+  padding-top: 1.25rem;
+}
+
+.maj {
+  font-size: 0.875rem;
+  color: var(--discret);
+  margin-top: 1.25rem;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+  line-height: 1.25;
+  scroll-margin-top: 1rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 3.5rem 0 1rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--bord);
+}
+
+h3 {
+  font-size: 1.35rem;
+  margin: 2.5rem 0 0.75rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin: 1.9rem 0 0.5rem;
+}
+
+h5 {
+  font-size: 1.0625rem;
+  margin: 1.5rem 0 0.4rem;
+}
+
+section {
+  scroll-margin-top: 1rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+}
+
+ul,
+ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin: 0.2rem 0;
+}
+
+li::marker {
+  color: var(--discret);
+}
+
+strong {
+  font-weight: 600;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--accent-fort);
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible,
+summary:focus-visible,
+.table-wrap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Dans le sommaire qui défile, un anneau extérieur serait rogné sur les côtés. */
+.toc a:focus-visible {
+  outline-offset: -2px;
+}
+
+code {
+  font-family: var(--police-code);
+  font-size: 0.875em;
+  background: var(--code-fond);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  overflow-wrap: break-word;
+}
+
+a code {
+  color: inherit;
+}
+
+/* En tête de ligne d'un tableau, la police à chasse fixe suffit. */
+.table-wrap th code {
+  background: none;
+  padding: 0;
+}
+
+/* ---------- Tableaux ---------- */
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+caption {
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--discret);
+  padding-bottom: 0.4rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--bord);
+  padding: 0.4rem 0.6rem;
+}
+
+thead th {
+  background: var(--th-fond);
+  font-weight: 600;
+}
+
+tbody th {
+  font-weight: 400;
+}
+
+/* Tableau récapitulatif */
+
+.commandes tbody th[scope="row"] {
+  width: 42%;
+}
+
+.commandes tr.groupe th {
+  background: var(--th-fond);
+  font-weight: 600;
+  padding-top: 0.55rem;
+}
+
+.commandes tr.groupe a {
+  color: var(--texte);
+  text-decoration-color: var(--bord);
+}
+
+.commandes tr.groupe a:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+/* ---------- Encadrés ---------- */
+
+.note {
+  margin: 1.25rem 0;
+  padding: 0 0 0 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.note-attention {
+  border-left-color: var(--texte);
+}
+
+/* L'étiquette passe en ligne : « Attention : … ». */
+.note p {
+  display: inline;
+  margin: 0;
+}
+
+.note .note-titre {
+  font-weight: 600;
+  font-size: inherit;
+}
+
+.note .note-titre::after {
+  content: "\00a0: ";
+}
+
+/* ---------- Liste repliée (Fléaux) ---------- */
+
+details.replie {
+  border: 1px solid var(--bord);
+  padding: 0 1rem;
+  margin: 0 0 1.25rem;
+}
+
+details.replie > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.6rem 0;
+}
+
+details.replie[open] > summary {
+  border-bottom: 1px solid var(--bord-leger);
+  margin-bottom: 0.5rem;
+}
+
+details.replie h4:first-of-type {
+  margin-top: 1rem;
+}
+
+/* ---------- Recherche ---------- */
+
+.en-recherche .intro {
+  display: none;
+}
+
+.aucun-resultat {
+  margin-top: 2rem;
+  color: var(--discret);
+}
+
+/* ---------- Pied de page ---------- */
+
+.pied {
+  border-top: 1px solid var(--bord);
+  font-size: 0.875rem;
+  color: var(--discret);
+}
+
+.pied-dedans {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 2rem;
+}
+
+.pied p {
+  margin: 0 0 0.4rem;
+}
+
+/* ---------- Écrans étroits : le sommaire devient un menu repliable ---------- */
+
+/* Même seuil que script.js (min-width: 62em), sans trou entre les deux. */
+@media not all and (min-width: 62em) {
+  .page {
+    display: block;
+  }
+
+  .nav {
+    border-right: 0;
+    border-bottom: 1px solid var(--bord);
+  }
+
+  .nav-collant {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .recherche {
+    position: static;
+    border-bottom: 0;
+    padding: 0.9rem 1.25rem 0.5rem;
+  }
+
+  .sommaire {
+    padding: 0 1.25rem 0.9rem;
+  }
+
+  .recherche[hidden] + .sommaire {
+    padding-top: 0.9rem;
+  }
+
+  .sommaire > summary {
+    display: list-item;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--discret);
+    background: var(--fond);
+  }
+
+  .sommaire[open] > summary {
+    margin-bottom: 0.25rem;
+  }
+
+  .toc a,
+  .toc ol a {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .contenu {
+    max-width: none;
+    padding: 0 1.25rem 3rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .commandes tbody th[scope="row"] {
+    width: auto;
+  }
+}
+
+@media (max-width: 30em) {
+  body {
+    font-size: 1rem;
+  }
+
+  .infos span {
+    display: block;
+  }
+
+  .infos span + span::before {
+    content: none;
+  }
+
+  th,
+  td {
+    padding: 0.35rem 0.45rem;
+  }
+}
+
+/* ---------- Impression ---------- */
+
+@media print {
+  .nav,
+  .evitement,
+  .aucun-resultat {
+    display: none !important;
+  }
+
+  .page {
+    display: block;
+  }
+
+  .contenu {
+    max-width: none;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+}
